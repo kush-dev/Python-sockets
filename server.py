@@ -1,21 +1,12 @@
-from socket import*
+import socket;
 
-serverPort=1234
-serverSocket=socket(AF_INET,SOCK_DGRAM)
-serverSocket.bind(('',serverPort))
-print('Connection Established!')
-print('Server is in waiting....')
+s=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+s.bind((socket.gethostname(),12345))
+s.listen(5)
 
 while True:
- 	message,clientAdress=serverSocket.recvfrom(123)
- 	print(message.decode(),clientAdress)
- 	modifiedMessage=message.upper()
-
- 	serverSocket.sendto(modifiedMessage,clientAdress)
- 	serverSocket.close()
-
-
- 	
-
- 	
-
+	clientsocket,address=s.accept()
+	print(f"connection from{address} has been established....!")
+	clientsocket.send(bytes("Welcome to the server....","utf-8"))
+    
+s.close()	
